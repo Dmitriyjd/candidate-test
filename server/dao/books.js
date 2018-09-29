@@ -13,12 +13,12 @@ function getBooks(callback) {
 
 /**
  * Send specific book entity by id
- * @param {Object} book - HTTP request object
+ * @param {Object} _id - HTTP request object
  * @param {Object} callback - HTTP request object
  * @returns {void}
  */
-function getBookById(book, callback){
-    Book.find(book, (err, result) => {
+function getBookById(_id, callback){
+    Book.find({ _id }, (err, result) => {
         callback && callback(err, result);
 });
 }
@@ -37,36 +37,38 @@ function createBook(book, callback) {
 
 /**
  * Remove specific book entity by id
- * @param {Object} book - HTTP request object
+ * @param {Number} id - Book id
  * @param {Object} callback - HTTP request object
  * @returns {void}
  */
-function removeBook(book, callback){
-    Book.delete(book, (err, result) => {
+function removeBook(id, callback){
+    Book.deleteOne({'_id' : id}, (err, result) => {
         callback && callback(err, result);
 });
 }
 
 /**
  * Update specific book entity by id
+ * @param {Number} id - Book id
  * @param {Object} book - HTTP request object
  * @param {Object} callback - HTTP request object
  * @returns {void}
  */
-function updateBook(book, callback){
-    Book.findOneAndUpdate({'id':book.id},book,{new:true}, (err, result) => {
+function updateBook(id, book, callback){
+    Book.findOneAndUpdate({'_id': id},book,{new:true}, (err, result) => {
         callback && callback(err, result);
 });
 }
 
 /**
  * update specific book filed/property
+ * @param {Number} id - Book id
  * @param {Object} book - HTTP request object
  * @param {Object} callback - HTTP request object
  * @returns {void}
  */
-function editBook(book, callback){
-    Book.findOneAndUpdate({'id':book.id},book,{new:true}, (err, result) => {
+function editBook(id, book, callback){
+    Book.findOneAndUpdate({'_id': id},book,{new:true}, (err, result) => {
         callback && callback(err, result);
     });
 }

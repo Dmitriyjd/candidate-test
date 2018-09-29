@@ -1,9 +1,9 @@
 var mongoose = require("mongoose");
 var schema =  mongoose.Schema({
     name: 'string',
-    author: 'string',
+    author: 'array',
     publishing: 'string',
-    ebook: 'string',
+    ebook: 'bool',
     year: 'string',
     isbn: 'string',
     pages: 'string',
