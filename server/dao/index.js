@@ -12,7 +12,7 @@ function DAO(config) {
         useNewUrlParser: true
     })
         .then(() => console.log('Mongodb has started.....'))
-        .catch(e => console.log(e));
+.catch(e => console.log(e));
 
 }
 
@@ -23,8 +23,14 @@ function DAO(config) {
  * @returns {void}
  */
 DAO.prototype.init = function (data, callback) {
-    var schema = new mongoose.Schema({ name: 'string', size: 'string' }); var Tank = mongoose.model('Tank', schema);
-    callback && callback();
+    data.collections.forEach(function (element) {
+        mongoose.connection.createCollection(element.name)
+            .then(() => {
+            mongoose.connection.collections[element.name].insert(element.rows);
+    })
+    .then(function(){ callback() })
+            .catch(function(){ callback() });
+    });
 };
 
 /**
@@ -34,8 +40,8 @@ DAO.prototype.init = function (data, callback) {
  */
 DAO.prototype.clear = function(callback) {
     mongoose.connection.dropDatabase()
-        .then(callback)
-        .catch(callback);
+        .then(function(){ callback() })
+        .catch(function(){ callback() });
 };
 
 var module;

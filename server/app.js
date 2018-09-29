@@ -30,19 +30,10 @@ app.use('/api/authors', authors);
 app.use('/api/books', books);
 
 /**
- * Init database
+ * Start app
  */
-dao.init({/*init data*/}, (err, db) => {
-
-    if (err) {
-        console.error(err);
-    }
-    /**
-     * Start app
-     */
-    app.listen(PORT, function () {
-        console.log(`App listening on port ${PORT}!`);
-    });
+app.listen(PORT, function () {
+    console.log(`App listening on port ${PORT}!`);
 });
 
 module.exports = app;
