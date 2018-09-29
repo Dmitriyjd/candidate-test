@@ -71,8 +71,6 @@ function removeBook(req, res) {
             });
         }
     });
-
-});
 }
 
 /**

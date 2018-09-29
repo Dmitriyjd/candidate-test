@@ -11,9 +11,8 @@ function DAO(config) {
         MongoClient:true,
         useNewUrlParser: true
     })
-        .then(() => console.log('Mongodb has started.....'))
-.catch(e => console.log(e));
-
+    .then(() => console.log('Mongodb has started.....'))
+    .catch(e => console.log(e));
 }
 
 /**
