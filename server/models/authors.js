@@ -4,8 +4,8 @@ var schema =  mongoose.Schema({
     firstName: 'string',
     secondName: 'string',
     email: 'string',
-    birthDate: 'string'
-
+    birthDate: 'string',
+    book: 'array'
 });
 
 var Author = mongoose.model('Author', schema);

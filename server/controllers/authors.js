@@ -10,7 +10,7 @@ var Authors = require("../dao/authors.js");
 function getAuthors(req, res) {
     Authors.getAuthors(
         function (err, result) {
-            res.send(result);
+            res.send({ authors: result });
         }
     )
 }
@@ -26,7 +26,7 @@ function getAuthorById(req, res) {
                 res.status(404).json({errors: ["Author not exist"]})
             }
             else {
-                res.status(200).json(result);
+                res.status(200).json({ author: result[0] });
             }
         });
 }
@@ -43,11 +43,11 @@ function addAuthor(req, res) {
     }
     Authors.getAuthorById(req.body._id,(err, result) => {
         if (result.length !== 0) {
-            res.status(404).json({errors: ["Author with this id already exist"]});
+            res.status(400).json({errors: ["Author with this id already exist"]});
         }
         else {
             Authors.addAuthor(req.body, (err, result) => {
-                res.status(201).json(result);
+                res.status(201).json({ author: result });
             });
         }
     });
@@ -60,13 +60,13 @@ function addAuthor(req, res) {
  * @returns {void}
  */
 function removeAuthor(req, res) {
-    Authors.getAuthorById(req.body._id,(err, result) => {
+    Authors.getAuthorById(req.params.id,(err, result) => {
         if (result.length === 0) {
             res.status(404).json({errors: ["Author not exist"]});
         }
         else {
             Authors.removeAuthor(req.body, (err, result) => {
-                res.status(201).json(result);
+                res.status(200).json({ status: 'OK' });
             });
         }
     });
@@ -79,22 +79,21 @@ function removeAuthor(req, res) {
 * @returns {void}
 */
 function editAuthor(req, res) {
-    if (!req.body.email) {
-        res.status(400).json({errors: ["E-mail is require"]});
-        return;
-    }
-
     Authors.getAuthorById(req.body._id,(err, result) => {
         if (result.length !== 0) {
-            res.status(404).json({errors: ["Author with this id already exist"]});
+            res.status(400).json({errors: ["Author with this id already exist"]});
         }
         else {
+            if (!req.body.email) {
+                res.status(400).json({errors: ["E-mail is require"]});
+                return;
+            }
             Authors.getAuthorById(req.params.id,(err, result) => {
                 if (result.length === 0) {
                     res.status(404).json({errors: ["Author not exist"]});
                 } else {
                     Authors.updateAuthor(req.params.id, req.body, (err, result) => {
-                        res.status(201).json(result);
+                        res.status(200).json({ author: result });
                     });
                 }
             });
@@ -116,7 +115,7 @@ function updateAuthor(req, res) {
 
     Authors.getAuthorById(req.body._id,(err, result) => {
         if (result.length !== 0) {
-            res.status(404).json({errors: ["Author with this id already exist"]});
+            res.status(400).json({errors: ["Author with this id already exist"]});
         }
         else {
             Authors.getAuthorById(req.params.id,(err, result) => {
@@ -124,7 +123,7 @@ function updateAuthor(req, res) {
                     res.status(404).json({errors: ["Author not exist"]});
                 } else {
                     Authors.updateAuthor(req.params.id, req.body, (err, result) => {
-                        res.status(201).json(result);
+                        res.status(200).json({ author: result });
                     });
                 }
             });
