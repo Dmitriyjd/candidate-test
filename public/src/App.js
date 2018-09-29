@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import './App.css';
-import Header from './components/header/Header';
+import Header from './components/Header/Header';
 import AuthorsBody from './components/AuthorsBody/AuthorsBody';
 import BooksBody from './components/BooksBody/BooksBody';
 
