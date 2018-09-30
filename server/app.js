@@ -23,11 +23,11 @@ app.use(express.static(path.join(__dirname, '../public/build')));
 /**
  * Routes
  */
-app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname, '../public/build/index.html'));
-});
 app.use('/api/authors', authors);
 app.use('/api/books', books);
+app.get('*', function (req, res) {
+    res.sendFile(path.join(__dirname, '../public/build/index.html'));
+});
 
 /**
  * Start app

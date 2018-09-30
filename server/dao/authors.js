@@ -37,12 +37,12 @@ function addAuthor(author, callback) {
 
 /**
  * Remove specific author entity by id
- * @param {Object} _id - HTTP request object
+ * @param {Object} id - HTTP request object
  * @param {Object} callback - HTTP request object
  * @returns {void}
  */
-function removeAuthor(_id, callback){
-    Author.deleteOne({'id' : _id}, (err, result) => {
+function removeAuthor(id, callback){
+    Author.deleteOne({'_id' : id}, (err, result) => {
         callback && callback(err, result);
     });
 }

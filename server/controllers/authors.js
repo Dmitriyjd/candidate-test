@@ -65,7 +65,7 @@ function removeAuthor(req, res) {
             res.status(404).json({errors: ["Author not exist"]});
         }
         else {
-            Authors.removeAuthor(req.body, (err, result) => {
+            Authors.removeAuthor(req.params.id, (err, result) => {
                 res.status(200).json({ status: 'OK' });
             });
         }
