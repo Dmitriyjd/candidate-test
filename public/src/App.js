@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import './App.css';
 import Header from './components/Header/Header';
 import AuthorsBody from './components/AuthorsBody/AuthorsBody';
@@ -82,29 +83,24 @@ class App extends Component {
     render() {
         console.log(this.state);
         return (
-            <div className="App">
-            <Header
-        ActiveButtonId={this.state.activeButtonId}
-        OnButtonClick={(id) => this.setState({activeButtonId: id})}
-        />
-        {
-            this.state.activeButtonId === 0
-                ? <AuthorsBody
-            data={this.state.authorsData}
-            onAuthorCreate={this.createAuthor}
-            onAuthorUpdate={this.updateAuthor}
-            onAuthorDelete={this.deleteAuthor}
-            />
-        : <BooksBody
-            data={this.state.booksData}
-            onBookCreate={this.createBook}
-            onBookUpdate={this.updateBook}
-            onBookDelete={this.deleteBook}
-            />
-        }
+            <Router>
+                <div>
+                    <ul>
+                        <li>
+                            <Link to="/authors">Authors</Link>
+                        </li>
+                        <li>
+                            <Link to="/books">Books</Link>
+                        </li>
+                    </ul>
 
-    </div>
-    );
+                    <hr />
+
+                    <Route path="/authors" component={AuthorsBody} />
+                    <Route path="/books" component={BooksBody} />
+                </div>
+            </Router>
+        );
     }
 }
 
