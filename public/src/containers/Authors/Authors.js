@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import AuthorCreationRow from '../../components/AuthorCreationRow';
-import './style.css';
-import AuthorRow from '../../components/AuthorRow/AuthorRow';
+import AuthorRow from '../../components/AuthorRow';
 
 class Authors extends Component {
     constructor(props) {
@@ -19,7 +18,6 @@ class Authors extends Component {
     getAuthors() {
         return axios.get('/api/authors')
             .then((data) => {
-                console.log(data);
                 this.setState({ data: data.data.authors });
             })
     }
