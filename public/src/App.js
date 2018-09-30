@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Authors from './containers/Authors';
 import './App.css';
-import Header from './components/Header/Header';
-import AuthorsBody from './components/AuthorsBody/AuthorsBody';
-import BooksBody from './components/BooksBody/BooksBody';
 
 class App extends Component {
     constructor(props){
@@ -15,11 +13,6 @@ class App extends Component {
             booksData: []
         };
 
-        this.getAuthors = this.getAuthors.bind(this);
-        this.updateAuthor = this.updateAuthor.bind(this);
-        this.deleteAuthor = this.deleteAuthor.bind(this);
-        this.createAuthor = this.createAuthor.bind(this);
-
         this.getBooks = this.getBooks.bind(this);
         this.updateBook = this.updateBook.bind(this);
         this.deleteBook = this.deleteBook.bind(this);
@@ -27,33 +20,10 @@ class App extends Component {
     };
 
     componentDidMount() {
-        this.getAuthors();
         this.getBooks();
     }
 
-    getAuthors() {
-        axios.get('/api/authors')
-            .then((data) => {
-                this.setState({ authorsData: data.data.author });
-            })
-    }
 
-    createAuthor(data) {
-        axios.post('/api/authors', data)
-            .then(() => this.getAuthors());
-    }
-
-    deleteAuthor(id) {
-        const xhr = new XMLHttpRequest();
-        xhr.open('DELETE', `/api/authors/${id}`, true);
-        xhr.send();
-        xhr.onreadystatechange = this.getAuthors;
-    }
-
-    updateAuthor(data) {
-        axios.patch(`/api/authors/${data._id}`, data)
-            .then(() => this.getAuthors());
-    }
 
     getBooks() {
         axios.get('/api/books')
@@ -81,7 +51,6 @@ class App extends Component {
 
 
     render() {
-        console.log(this.state);
         return (
             <Router>
                 <div>
@@ -96,8 +65,8 @@ class App extends Component {
 
                     <hr />
 
-                    <Route path="/authors" component={AuthorsBody} />
-                    <Route path="/books" component={BooksBody} />
+                    <Route path="/authors" component={Authors} />
+                    <Route path="/books" component={Authors} />
                 </div>
             </Router>
         );
